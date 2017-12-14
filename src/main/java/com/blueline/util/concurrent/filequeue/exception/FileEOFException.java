@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.google.code.fqueue.exception;
+package com.blueline.util.concurrent.filequeue.exception;
 /**
  *@author sunli
  *@date 2011-5-18

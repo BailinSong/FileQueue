@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.google.code.fqueue.log;
+package com.blueline.util.concurrent.filequeue.log;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,10 +24,9 @@ import java.nio.channels.FileChannel.MapMode;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import com.blueline.util.concurrent.filequeue.util.MappedByteBufferUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.code.fqueue.util.MappedByteBufferUtil;
 
 /**
  * @author sunli
@@ -35,7 +34,7 @@ import com.google.code.fqueue.util.MappedByteBufferUtil;
  * @version $Id$
  */
 public class FileRunner implements Runnable {
-    private final Logger log = LoggerFactory.getLogger(FileRunner.class);
+    private static  final Logger log = LoggerFactory.getLogger(FileRunner.class);
     // 删除队列
     private static final Queue<String> deleteQueue = new ConcurrentLinkedQueue<String>();
     // 新创建队列
@@ -45,10 +44,12 @@ public class FileRunner implements Runnable {
     private volatile boolean keepRunning = true;
 
     public static void addDeleteFile(String path) {
+        log.debug("add delete file "+path);
         deleteQueue.add(path);
     }
 
     public static void addCreateFile(String path) {
+        log.debug("add create file "+path);
         createQueue.add(path);
     }
 
@@ -99,7 +100,7 @@ public class FileRunner implements Runnable {
             MappedByteBuffer mappedByteBuffer = fc.map(MapMode.READ_WRITE, 0, this.fileLimitLength);
             mappedByteBuffer.put(LogEntity.MAGIC.getBytes());
             mappedByteBuffer.putInt(1);// 8 version
-            mappedByteBuffer.putInt(-1);// 12next fileindex
+            mappedByteBuffer.putLong(-1);// 12next fileindex
             mappedByteBuffer.putInt(-2);// 16
             mappedByteBuffer.force();
             MappedByteBufferUtil.clean(mappedByteBuffer);

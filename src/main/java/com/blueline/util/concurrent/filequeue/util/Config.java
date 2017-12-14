@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.google.code.fqueue.util;
+package com.blueline.util.concurrent.filequeue.util;
 
-import com.google.code.fqueue.exception.ConfigException;
+import com.blueline.util.concurrent.filequeue.exception.ConfigException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

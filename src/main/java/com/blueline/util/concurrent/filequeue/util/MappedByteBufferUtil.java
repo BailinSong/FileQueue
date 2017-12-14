@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.google.code.fqueue.util;
+package com.blueline.util.concurrent.filequeue.util;
 
 import java.lang.reflect.Method;
 import java.security.AccessController;

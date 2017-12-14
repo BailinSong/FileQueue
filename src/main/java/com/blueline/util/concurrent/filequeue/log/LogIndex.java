@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.google.code.fqueue.log;
+package com.blueline.util.concurrent.filequeue.log;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +27,9 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.blueline.util.concurrent.filequeue.exception.FileFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.code.fqueue.exception.FileFormatException;
 
 /**
  * 数据索引文件
@@ -78,8 +77,8 @@ public class LogIndex {
 			version = 1;
 			readerPosition = LogEntity.messageStartPosition;
 			writerPosition = LogEntity.messageStartPosition;
-			readerIndex = 1;
-			writerIndex = 1;
+			readerIndex = fileNum;
+			writerIndex = fileNum;
 		} else {
 			dbRandFile = new RandomAccessFile(dbFile, "rwd");
 			if (dbRandFile.length() < 40) {

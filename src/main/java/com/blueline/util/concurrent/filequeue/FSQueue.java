@@ -13,19 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.google.code.fqueue;
+package com.blueline.util.concurrent.filequeue;
+
+import com.blueline.util.concurrent.filequeue.exception.FileEOFException;
+import com.blueline.util.concurrent.filequeue.exception.FileFormatException;
+import com.blueline.util.concurrent.filequeue.log.FileRunner;
+import com.blueline.util.concurrent.filequeue.log.LogEntity;
+import com.blueline.util.concurrent.filequeue.log.LogIndex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import com.google.code.fqueue.exception.FileEOFException;
-import com.google.code.fqueue.exception.FileFormatException;
-import com.google.code.fqueue.log.FileRunner;
-import com.google.code.fqueue.log.LogEntity;
-import com.google.code.fqueue.log.LogIndex;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 完成基于文件的先进先出的读写功能
@@ -117,7 +118,7 @@ public class FSQueue {
 	 * @throws FileFormatException
 	 */
 	private void rotateNextLogWriter() throws IOException, FileFormatException {
-		writerIndex = writerIndex + 1;
+		writerIndex = getNextWiterIndex();
 		writerHandle.putNextFile(writerIndex);
 		if (readerHandle != writerHandle) {
 			writerHandle.close();
@@ -198,9 +199,14 @@ public class FSQueue {
 		writerHandle.close();
 		deleteFileRunner.exit();
 		executor.shutdown();
+		db.close();
 	}
 
 	public int getQueuSize() {
 		return db.getSize();
+	}
+
+	private long getNextWiterIndex(){
+		return System.currentTimeMillis();
 	}
 }

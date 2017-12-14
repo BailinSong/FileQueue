@@ -13,31 +13,37 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.google.code.fqueue.exception;
+package com.blueline.util.concurrent.filequeue.exception;
 /**
  *@author sunli
  *@date 2011-5-18
  *@version $Id$
  */
-public class ConfigException extends RuntimeException {
+public class FileFormatException extends Exception {
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5680376999772385539L;
-	public ConfigException() { 
+	private static final long serialVersionUID = 6950322066714479555L;
+
+	/**
+	 * Constructs an {@code FileFormatException} with {@code null} as its error
+	 * detail message.
+	 */
+	public FileFormatException() {
+		super();
 	}
 
-	public ConfigException(String message) {
+	public FileFormatException(String message) {
 		super(message);
 	}
 
-	public ConfigException(Throwable cause) {
+	public FileFormatException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public FileFormatException(Throwable cause) {
 		super(cause);
 	}
-
-	public ConfigException(String message, Throwable cause) {
-		super(message, cause);
-		
-	}
-
 }

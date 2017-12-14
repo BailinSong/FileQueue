@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.google.code.fqueue.log;
+package com.blueline.util.concurrent.filequeue.log;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +27,11 @@ import java.security.PrivilegedAction;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.blueline.util.concurrent.filequeue.exception.FileEOFException;
+import com.blueline.util.concurrent.filequeue.exception.FileFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.code.fqueue.exception.FileEOFException;
-import com.google.code.fqueue.exception.FileFormatException;
 /**
  *@author sunli
  *@date 2011-5-18
@@ -49,7 +49,7 @@ public class LogEntity {
 	private RandomAccessFile raFile;
 	private FileChannel fc;
 	public MappedByteBuffer mappedByteBuffer;
-	private int fileLimitLength = 1024 * 1024 * 40;
+	private int fileLimitLength = 4*1024;
 
 	private LogIndex db = null;
 	/**
@@ -64,7 +64,7 @@ public class LogEntity {
 	private long currentFileNumber = -1;
 
 	public LogEntity(String path, LogIndex db, long fileNumber,
-			int fileLimitLength) throws IOException, FileFormatException {
+  			int fileLimitLength) throws IOException, FileFormatException {
 		this.currentFileNumber = fileNumber;
 		this.fileLimitLength = fileLimitLength;
 		this.db = db;
@@ -73,7 +73,7 @@ public class LogEntity {
 		if (file.exists() == false) {
 			createLogEntity();
 
-			FileRunner.addCreateFile(Long.toString(System.currentTimeMillis()));
+//			FileRunner.addCreateFile(Long.toString(System.currentTimeMillis()));
 		} else {
 			raFile = new RandomAccessFile(file, "rwd");
 			if (raFile.length() < LogEntity.messageStartPosition) {
