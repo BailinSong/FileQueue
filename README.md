@@ -1,4 +1,4 @@
-# FQueue-精简
+# FileQueue/BlockingFileQueue
 **基于：sunli1223/fqueue[https://github.com/sunli1223/fqueue]
 修改精简**
 ## 介绍
